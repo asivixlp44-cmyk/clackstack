@@ -196,11 +196,16 @@ first, then the quality.
 | `node tests/covers.mjs` / `node tests/setup-page.mjs` | Render the covers / write `bloxity-setup.html` | |
 | `node tests/looks.mjs [quality]` / `node tests/press.mjs` | Screenshots for judging the look (the plaza, the stairs, every sky) / a key press frame by frame | |
 | `node tests/walk.mjs [N]` / `node tests/walkup.mjs` | Walking up without jumping: every step of the way on the shared physics for stages 1-N / the first flight in the browser with real keys only | 99.9% (1 diagonal step in ~4000) / PASS |
+| `node tests/live.mjs` | The hosted game: loads, joins a server through the relay, real input, no console errors | LIVE OK |
 | `node tests/mats.mjs` / `node tests/progwatch.mjs` | Materials whose shader is worked out again every frame / shaders compiled mid-game | 0 / none |
 
 Browser tests need Chrome installed (`tests/` uses puppeteer-core); `npm --prefix tests install` once.
 
 ## Deploying
+
+**Live:** https://clackstack.play.bloxity.io (server: https://clackstack.host.bloxity.io/health answers `"db": true`). The repo is
+`asivixlp44-cmyk/clackstack`. `node tests/live.mjs` checks the live game in Chrome: it loads, joins a server through the matchmaker's relay
+(never a socket to `clackstack.host.bloxity.io`), takes real key input, no console errors (first run, 2026-11-17: in the game in 6.6 s).
 
 `.github/workflows/deploy.yml` deploys on every push: `main` to the production channel, `dev` to the playtest channel, to prod always and
 to stage too once the repo has the `LEGION_DEPLOY_TOKEN_STAGE` secret (separate matrix jobs: a stage failure never blocks prod). A manual
